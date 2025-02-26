@@ -18,8 +18,5 @@ app.get("/api/flags", (req, res) => {
   res.json(selectedFlags);
 });
 
-const port = 3000;
-
-app.listen(port, () => {
-  console.log(`App is running on port ${port}`);
-});
+// Экспортируем функцию для Vercel
+module.exports = app;
