@@ -39,7 +39,13 @@ const randomQuestion = (count) => {
 
 // Экспорируем серверless-функцию для Vercel
 module.exports = (req, res) => {
-  const count = parseInt(req.query.count) || 5;
+  // Получаем значение count из query параметра
+  const count = parseInt(req.query.count);
+
+  // Проверяем, что count является числом и больше нуля
+  if (isNaN(count) || count <= 0) {
+    return res.status(400).json({ error: 'Invalid count parameter. It must be a positive integer.' });
+  }
 
   if (count > flags.length) {
     return res.status(400).json({ error: 'Not enough flags available' });
@@ -48,3 +54,4 @@ module.exports = (req, res) => {
   const selectedFlags = randomQuestion(count);
   res.json(selectedFlags);
 };
+
