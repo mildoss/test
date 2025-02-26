@@ -1,11 +1,3 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
-
-// Настройка CORS
-app.use(cors());
-
-// Массив флагов
 const flags = [
   { flag: "https://flagcdn.com/w320/fr.png", options: shuffleOptions(["France", "Italy", "Germany", "Spain"]), correct: "France" },
   { flag: "https://flagcdn.com/w320/de.png", options: shuffleOptions(["Germany", "Austria", "Belgium", "Netherlands"]), correct: "Germany" },
@@ -45,11 +37,8 @@ const randomQuestion = (count) => {
   return shuffled.slice(0, count);
 }
 
-// Настройка CORS
-app.use(cors());
-
-// Обработчик маршрута для /api/flags
-app.get("/api/flags", (req, res) => {
+// Экспорируем серверless-функцию для Vercel
+module.exports = (req, res) => {
   const count = parseInt(req.query.count) || 5;
 
   if (count > flags.length) {
@@ -58,7 +47,4 @@ app.get("/api/flags", (req, res) => {
 
   const selectedFlags = randomQuestion(count);
   res.json(selectedFlags);
-});
-
-// Экспортируем функцию для Vercel
-module.exports = app;
+};
