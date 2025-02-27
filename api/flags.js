@@ -27,7 +27,7 @@ function shuffleOptions(options) {
   const shuffled = [...options];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
 }
@@ -37,22 +37,21 @@ const randomQuestion = (count) => {
   return shuffled.slice(0, count);
 }
 
-// Экспорируем серверless-функцию для Vercel
 module.exports = (req, res) => {
   // Настройка CORS
-  res.setHeader('Access-Control-Allow-Origin', 'https://quiz-git-front-vlads-projects-75803716.vercel.app'); // Разрешаем доступ с вашего фронтенда
-  res.setHeader('Access-Control-Allow-Methods', 'GET'); // Разрешаем только GET-запросы
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Разрешаем только заголовок Content-Type
+  res.setHeader('Access-Control-Allow-Origin', 'https://quiz-neon-chi.vercel.app/');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Если это предварительный запрос OPTIONS (предполагается, что это браузер)
+
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  // Получаем значение count из query параметра
+
   const count = parseInt(req.query.count);
 
-  // Проверяем, что count является числом и больше нуля
+
   if (isNaN(count) || count <= 0) {
     return res.status(400).json({ error: 'Invalid count parameter. It must be a positive integer.' });
   }
