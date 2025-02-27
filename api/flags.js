@@ -39,6 +39,16 @@ const randomQuestion = (count) => {
 
 // Экспорируем серверless-функцию для Vercel
 module.exports = (req, res) => {
+  // Настройка CORS
+  res.setHeader('Access-Control-Allow-Origin', 'https://quiz-git-front-vlads-projects-75803716.vercel.app'); // Разрешаем доступ с вашего фронтенда
+  res.setHeader('Access-Control-Allow-Methods', 'GET'); // Разрешаем только GET-запросы
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Разрешаем только заголовок Content-Type
+
+  // Если это предварительный запрос OPTIONS (предполагается, что это браузер)
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   // Получаем значение count из query параметра
   const count = parseInt(req.query.count);
 
@@ -54,4 +64,3 @@ module.exports = (req, res) => {
   const selectedFlags = randomQuestion(count);
   res.json(selectedFlags);
 };
-
